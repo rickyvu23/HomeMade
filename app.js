@@ -24,6 +24,14 @@ Ext.application({
     ],
     
 	launch: function() {
-        Ext.create('HomeMade.view.HomeMade',{renderTo: Ext.getBody()});
-    }
+         Ext.create('Ext.container.Viewport',
+         {
+            layout: 'vbox',
+            items: [{
+                xtype:'homeMade' // same as alias in view
+            }]
+         
+    });
+     }
+
 });

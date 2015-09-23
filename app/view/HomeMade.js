@@ -1,6 +1,6 @@
 Ext.define('HomeMade.view.HomeMade', {
 	extend: 'Ext.panel.Panel',
-	//alias: 'widget.HomeMade',
+	alias: 'widget.homeMade',
 	
 	title: 'HomeMade',
 	id : 'HomeMade',
@@ -10,6 +10,13 @@ Ext.define('HomeMade.view.HomeMade', {
         type: 'vbox',
         align: 'stretch'
     },
+    
+    //config : {},
+    //constructor : function(config){
+    //    this.initConfig(config);
+     //   return this.callParent(arguments);
+    //},
+
 	
 /*
 Ext.apply() is used to simplify the copying of many properties from a source to a target 
@@ -31,9 +38,17 @@ value it will apply the reference!
                     xtype: 'gridpanel',
                     flex: 1,
                     width : '100%',
+                    id: 'hm',
     				height : 500,
                     store:'homemade',
-                    
+                    plugins : [Ext.create('Ext.grid.plugin.RowEditing', 
+
+			            {
+			                clicksToEdit : 2
+			                //if you have checkbox in first row then take clicksToEdit=2 otherwise it will go on edit mode
+			            	// chu y phai add EDITOR trong nhu ben duoi de co the edit khi double click vao.
+			            })],
+			                    
 //name function o muc nay de cho biet khi click vao cai list thi no se load cai function
 //dc viet ra o phia duoi sau CallParent.
                     listeners: {
@@ -43,24 +58,41 @@ value it will apply the reference!
             		},
 
 			        columns : [
-							
+								
 								{
 									xtype:'gridcolumn',
 									dataIndex: 'name',
 									text:'Name',
-									flex:1
+									flex:1,
+									//EDITOR is here. 
+									editor : 
+					                {
+					                    // defaults to textfield if no xtype is supplied
+					                    allowBlank : false
+					                }
 								},
 								{
 									xtype:'gridcolumn',
 									dataIndex: 'ingredient',
 									text: 'Ingredient',
-									flex: 1
+									flex: 1,
+									//EDITOR is here. 
+									editor : 
+					                {
+					                    // defaults to textfield if no xtype is supplied
+					                    allowBlank : false
+					                }
 								},
 								{
 									xtype:'datecolumn',
 									dataIndex:'date',
 									text: 'Date',
-									flex: 1
+									flex: 1,//EDITOR is here. 
+									editor : 
+					                {
+					                    // defaults to textfield if no xtype is supplied
+					                    allowBlank : false
+					                }
 								},
 								{
 									xtype: 'gridcolumn',
@@ -70,6 +102,7 @@ value it will apply the reference!
 	
 								],
 
+
 					dockedItems: [
 					{
 						xtype: 'toolbar',
@@ -78,42 +111,38 @@ value it will apply the reference!
 						layout: { pack: 'center'},
 						items: [
 								{
+				                    xtype: 'button',
 				                    text : 'Create',
 				                    itemId : 'btnCreate'
-				                    /*onCreate: function(){
-				                    	var a = this.getHomeMade();
-				                    	var b = a.getStore();
-				                    	var create = Ext.create('HomeMade.medol/homemade');
-				                    	create.set("name", "item's name");
-				                    	create.set("ingredient", "what are in it?");
-				                    	create.set("date", "");
-				                    	b.add(creat);
-				                    	a.editingPlugin.starEdit(create, 3);
-
-				                    } */
+				                    
 				                }, 
 				                {
+				                    xtype: 'button',
 				                    text : 'Load Data',
 				                    itemId : 'btnLoad',
-				                    onLoadClick: function(){
-				                    	var store = Ext.getStore('homemade');
-				                    	store.load();
-				                    }
-				                }, 
+				                    //listeners: {
+                					
+				                //}
+				            }, 
 				                {
+				                    xtype: 'button',
 				                    text : 'Save',
 				                    itemId : 'btnSave'
 				                }, 
 				                {
+				                    xtype: 'button',
 				                    text : 'Delete',
 				                    itemId : 'btnDelete'
 				                }
 
 						]
 					}
-					]
+					],
+					selModel: Ext.create('Ext.selection.CheckboxModel', { mode : 'MULTI'
+
+                    })
 				
-    
+    				
     			},
 
     				{
@@ -129,7 +158,7 @@ value it will apply the reference!
                 }
 
     			],
-    			listeners : { // need this line when add event listener
+    			/*listeners : { // need this line when add event listener
 
     			//sau khi cai view render xong phai goi store load thi moi lay dc data.
 	        	afterrender : function(){ 
@@ -138,7 +167,7 @@ value it will apply the reference!
 
 		        },
 		        
-	        }
+	        }*/
 
 	   	
 
@@ -149,7 +178,10 @@ value it will apply the reference!
 },
 				//outside apply
 				onGridpanelSelect: function (rowmodel, record, index, eOpts) {
-	   				var pic = this.child('#pic'); // chi dinh gia tri cua pic la nhanh con bang #
+	   				var pic = this.child('#pic'); // chi dinh pic la nha'nh child bang #
 	   				pic.update(record.data);		// sau do update
-	   	}
+	   	},
+
+
+				                   
 });

@@ -3,10 +3,10 @@ Ext.define('HomeMade.store.homemade', {
 
     
 
-    constructor: function() {
+    //constructor: function() {
         
-        this.callParent([Ext.apply({
-            autoload: true,
+        //this.callParent([Ext.apply({
+            autoload: false,
             model:'HomeMade.model.homemade',
             storeId: 'homemade',
             proxy: {
@@ -16,8 +16,24 @@ Ext.define('HomeMade.store.homemade', {
                 type: 'json',
                 root: 'data',
                 successProperty: 'success'
-            }
+            },
+            api : 
+                {
+                    read : 'data/home.json',
+                    create : 'data/home.json',
+                    update : 'data/home.json',
+                    destroy : 'data/home.json',
+                    save: 'data/home.json'
+                },
+            actionMethods : 
+                {
+                    destroy : 'POST',
+                    read : 'GET',
+                    create : 'POST',
+                    update : 'POST',
+                    save: 'POST'
+                }
     }
-})]);
-    }
+//})]);
+    //}
 });
